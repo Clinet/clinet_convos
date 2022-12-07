@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/JoshuaDoes/go-wolfram"
+	"github.com/m1guelpf/chatgpt-telegram/src/chatgpt"
 )
 
 type ConversationState struct {
@@ -28,6 +29,7 @@ type ConversationResponse struct {
 	//Service conversation states
 	ExpirationTime  *time.Time            `json:"expiresAt"`    //When to expire this response's service conversation states, nil to leave unchecked
 	WolframAlpha    *wolfram.Conversation `json:"stateWolfram"` //Conversation state from Wolfram|Alpha, if present
+	ChatGPT         *chatgpt.ChatResponse `json:"stateGPT"`     //Conversation state from ChatGPT, if present
 	//GoogleAssistant *gassist.Conversation `json:"stateGoogle"`  //Conversation state from Google Assistant, if present
 }
 
