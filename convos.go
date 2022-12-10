@@ -1,6 +1,7 @@
 package convos
 
 import (
+	"strings"
 	"time"
 )
 
@@ -20,8 +21,8 @@ type Conversation struct {
 }
 
 //NewConversation returns an empty conversation
-func NewConversation() (*Conversation) {
-	return &Conversation{
+func NewConversation() (Conversation) {
+	return Conversation{
 		History: make([]*ConversationState, 0),
 	}
 }
@@ -34,6 +35,19 @@ func (convo *Conversation) QueryText(queryText string) (*ConversationState) {
 			Text: queryText,
 		},
 		Errors: make([]error, 0),
+	}
+
+	test := strings.ToLower(queryText)
+	/*if strings.Contains(test, "reset") ||
+		strings.Contains(test, "reload") ||
+		strings.Contains(test, "restart") ||
+		strings.Contains(test, "refresh") {*/
+	if test == "reset" || test == "reload" || test == "restart" || test == "refresh" {
+		convo.History = make([]*ConversationState, 0)
+		newState.Response = &ConversationResponse{
+			TextSimple: "Refreshed the conversation state! I've forgotten everything...",
+		}
+		return newState
 	}
 
 	//Query all available convo services in registered order
